@@ -1,0 +1,38 @@
+
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  express:
+    build:
+      context: ./server
+    container_name: express_container
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/usr/src/app
+    depends_on:
+      - db
+
+  frontend:
+    image: nginx:latest
+    container_name: nginx_container
+    ports:
+      - "8080:80"
+    volumes:
+      - ./server/public:/usr/share/nginx/html
+
+volumes:
+  db_data:

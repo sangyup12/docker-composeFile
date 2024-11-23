@@ -1,0 +1,85 @@
+<div class="container">
+  <h2>Cart</h2>
+  <form id="cartForm" method="post">
+    <table class="table table-bordered" style="text-align: center">
+      <thead class="table-primary">
+        <tr>
+          <th>구매선택</th>
+          <th>상품</th>
+          <th>상품명</th>
+          <th>단가</th>
+          <th>담은날</th>
+          <th>수량</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (car.length > 0) { %> <% for (let i = 0; i < car.length; i++) { %>
+        <tr>
+          <td style="vertical-align: middle; text-align: center">
+            <input
+              type="checkbox"
+              name="cartIds"
+              value="<%= car[i].cart_id %>"
+            />
+          </td>
+          <td>
+            <a href="#" style="text-decoration: none">
+              <img
+                src="<%= car[i].image %>"
+                alt="<%= car[i].name%>"
+                style="width: 100px; height: 100px"
+              />
+            </a>
+          </td>
+
+          <td style="vertical-align: middle; text-align: center">
+            <%= car[i].name%>
+          </td>
+          <td style="vertical-align: middle; text-align: center">
+            <%= car[i].price.toLocaleString('ko-KR')%> 원
+          </td>
+          <td style="vertical-align: middle; text-align: center">
+            <%= car[i].date%>
+          </td>
+          <td style="vertical-align: middle; text-align: center">
+            <input
+              type="number"
+              name="quantities"
+              value="1"
+              style="width: 50px"
+              min="1"
+            />
+          </td>
+        </tr>
+        <% } %> <% } else { %>
+
+        <tr>
+          <td colspan="6">장바구니에 담긴 상품이 없습니다.</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-end mt-3">
+      <button
+        type="submit"
+        name="action"
+        value="checkout"
+        formaction="/purchase/cart/checkout"
+        class="btn btn-primary me-2"
+      >
+        결제
+      </button>
+      <button
+        type="submit"
+        name="action"
+        value="delete"
+        formaction="/purchase/cart/delete"
+        class="btn btn-danger me-2"
+      >
+        삭제
+      </button>
+      <a href="/" class="btn btn-secondary">상품 목록 돌아가기</a>
+    </div>
+  </form>
+</div>

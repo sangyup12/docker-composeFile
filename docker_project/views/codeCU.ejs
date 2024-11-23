@@ -1,0 +1,94 @@
+<div class="container">
+  <h2>코드 <%= title %></h2>
+  <form
+    action="<%= codes && codes.length > 0 ? '/code/update_process' : '/code/create_process' %>"
+    method="post"
+  >
+    <% if (codes && codes.length > 0) { %>
+    <!-- 수정 시 숨겨진 필드 -->
+    <input
+      type="hidden"
+      name="original_main_id"
+      value="<%= codes[0].main_id %>"
+    />
+    <input
+      type="hidden"
+      name="original_sub_id"
+      value="<%= codes[0].sub_id %>"
+    />
+    <input type="hidden" name="original_start" value="<%= codes[0].start %>" />
+    <input type="hidden" name="original_end" value="<%= codes[0].end %>" />
+    <% } %>
+
+    <div class="mb-3">
+      <label class="form-label" for="id">대분류</label>
+      <input
+        class="form-control"
+        type="text"
+        name="main_id"
+        value="<%= codes && codes.length > 0 ? codes[0].main_id : '' %>"
+        style="width: 300px"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">대분류명</label>
+      <input
+        class="form-control"
+        type="text"
+        name="main_name"
+        value="<%= codes && codes.length > 0 ? codes[0].main_name : '' %>"
+        style="width: 300px"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">소분류</label>
+      <input
+        class="form-control"
+        type="text"
+        name="sub_id"
+        value="<%= codes && codes.length > 0 ? codes[0].sub_id : '' %>"
+        style="width: 300px"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">소분류명</label>
+      <input
+        class="form-control"
+        type="text"
+        name="sub_name"
+        value="<%= codes && codes.length > 0 ? codes[0].sub_name : '' %>"
+        style="width: 300px"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">시작일</label>
+      <input
+        class="form-control"
+        type="text"
+        name="start"
+        id="start"
+        value="<%= codes && codes.length > 0 ? codes[0].start : '' %>"
+        style="width: 300px"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">종료일</label>
+      <input
+        class="form-control"
+        type="text"
+        name="end"
+        id="end"
+        value="<%= codes && codes.length > 0 ? codes[0].end : '' %>"
+        style="width: 300px"
+      />
+    </div>
+    <button class="btn btn-outline-primary btn-sm" type="submit">
+      <%= title %>
+    </button>
+    <a href="/code/view">
+      <button class="btn btn-outline-secondary btn-sm" type="button">
+        코드 목록 돌아가기
+      </button>
+    </a>
+  </form>
+</div>

@@ -1,0 +1,121 @@
+<div class="container">
+  <% if (typeof errorMessage !== 'undefined') { %>
+  <script>
+    alert("<%= errorMessage %>");
+  </script>
+  <% } %>
+  <h2><%= post && post.board_id ? "게시글 상세보기" : "게시글 작성" %></h2>
+
+  <% if (post && post.board_id && !editMode) { %>
+  <!-- 읽기 전용 모드 -->
+  <div class="mb-3">
+    <label class="form-label">제목</label>
+    <p class="form-control-plaintext"><%= post.title %></p>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">작성자</label>
+    <p class="form-control-plaintext"><%= who %></p>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">내용</label>
+    <p class="form-control-plaintext"><%= post.content %></p>
+  </div>
+  <!-- 버튼들 (작성자와 로그인 사용자 일치 여부 및 관리자 여부에 따라 표시) -->
+  <a href="/board/view/<%= post.type_id %>">
+    <button type="button" class="btn btn-outline-primary btn-sm">목록</button>
+  </a>
+
+  <% if (cls === 'MNG' || who === post.loginid) { %>
+  <!-- 관리자 또는 작성자 일치 시 수정, 삭제 버튼 표시 -->
+  <a href="/board/detail/<%= post.board_id %>?edit=true">
+    <button class="btn btn-outline-success btn-sm">수정</button>
+  </a>
+  <% if (cls === 'MNG') { %>
+  <!-- 관리자는 비밀번호 없이 삭제 가능 -->
+  <a
+    href="/board/delete/<%= post.board_id %>?type_id=<%= types[0].type_id %>"
+    onclick="return confirm('정말로 삭제하시겠습니까?');"
+  >
+    <button type="button" class="btn btn-outline-danger btn-sm">삭제</button>
+  </a>
+  <% } else { %>
+  <!-- 일반 작성자에게는 비밀번호 필요 -->
+  <a
+    href="#"
+    onclick="
+            const password = prompt('삭제하려면 비밀번호를 입력하세요:');
+            if (password) {
+              window.location.href = '/board/delete/<%= post.board_id %>?type_id=<%= types[0].type_id %>&password=' + encodeURIComponent(password);
+            }
+          "
+  >
+    <button type="button" class="btn btn-outline-danger btn-sm">삭제</button>
+  </a>
+  <% } %> <% } %> <% } else { %>
+  <!-- 수정 모드 -->
+  <form
+    action="<%= post && post.board_id ? `/board/update_process/${post.board_id}` : '/board/create_process' %>"
+    method="post"
+  >
+    <input
+      type="hidden"
+      name="type_id"
+      value="<%= post && post.type_id ? post.type_id : typeId %>"
+    />
+    <input type="hidden" name="loginid" value="<%= who %>" />
+
+    <div class="mb-3">
+      <label class="form-label" for="id">제목</label>
+      <input
+        class="form-control"
+        type="text"
+        name="title"
+        value="<%= post ? post.title : '' %>"
+        style="width: 300px"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">작성자</label>
+      <input
+        class="form-control"
+        type="text"
+        name="writer"
+        value="<%= who %>"
+        style="width: 300px"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">내용</label>
+      <textarea
+        class="form-control"
+        name="content"
+        style="width: 800px; height: 200px"
+      >
+<%= post ? post.content : '' %></textarea
+      >
+    </div>
+
+    <!-- 비밀번호 입력 (관리자일 경우 숨김) -->
+    <% if (cls !== 'MNG') { %>
+    <div class="mb-3">
+      <label class="form-label" for="id">갱신 삭제 시 비밀번호</label>
+      <input
+        class="form-control"
+        type="password"
+        name="password"
+        style="width: 300px"
+        required
+      />
+    </div>
+    <% } %>
+
+    <button class="btn btn-success btn-sm" type="submit">
+      <%= post && post.board_id ? "수정" : "생성" %>
+    </button>
+    <a href="/board/view/<%= post && post.board_id ? post.type_id : typeId%>">
+      <button type="button" class="btn btn-outline-primary btn-sm">목록</button>
+    </a>
+  </form>
+  <% } %>
+</div>

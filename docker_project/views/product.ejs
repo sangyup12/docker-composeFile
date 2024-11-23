@@ -1,0 +1,54 @@
+<table class="table table-bordered" style="text-align: center">
+  <thead class="table-primary">
+    <tr>
+      <th>상품</th>
+      <th>상품명</th>
+      <th>가격</th>
+      <th>브랜드</th>
+      <% if (!isRoot) { %> <!-- '/' 요청이 아닐 때만 작업 열을 표시 -->
+      <th colspan="2">작업</th>
+    <% } %>      <!-- 작업 컬럼 제목을 추가 -->
+    </tr>
+  </thead>
+  <tbody>
+    <% if (mer.length > 0) { %>
+    <!-- 데이터가 있을 경우 -->
+    <% for (let i = 0; i < mer.length; i++) { %>
+    <tr>
+      <td>
+        <a href="/detail/<%= mer[i].mer_id %>" style="text-decoration: none">
+          <img
+            src="<%= mer[i].image %>"
+            style="width: 100px; height: 100px"
+          />
+          </a>
+      </td>
+      <td><%= mer[i].name %></td>
+      <td>
+        <%= mer && mer.length > 0 ? mer[i].price.toLocaleString('ko-KR') : '' %>
+      </td>
+      <td><%= mer[i].brand %></td>
+      <% if (!isRoot) { %> <!-- '/' 요청이 아닐 때만 수정/삭제 표시 -->
+            <td><a href="/product/update/<%=mer[i].mer_id %>">수정</a></td>
+            <td>
+              <a href="/product/delete/<%=mer[i].mer_id %>" onclick="if(confirm('정말로 삭제하시겠습니까?')==false) return false">삭제</a>
+            </td>
+          <% } %>
+      </td>
+    </tr>
+    <% } %> <% } else { %>
+    <!-- 데이터가 없을 경우 -->
+    <tr>
+      <td colspan="<%= isRoot ? 4 : 6 %>">
+        <p>자료가 없으니 상품 추가 버튼으로 코드를 추가해 주십시오.</p>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<% if (!isRoot) { %> <!-- '/' 요청이 아닐 때만 추가 버튼 표시 -->
+  <a href="/product/create">
+    <button class="btn btn-outline-secondary btn-sm" type="submit">상품 추가</button>
+  </a>
+<% } %>

@@ -1,0 +1,126 @@
+<div class="container">
+  <h2><%= man && man.length > 0 ? '회원정보 수정' : '회원가입' %></h2>
+  <form
+    action="<%= man && man.length > 0 ? '/person/update_process' : '/auth/register_process' %>"
+    method="post"
+  >
+    <% if (man && man.length > 0) { %>
+    <!-- 수정 시 숨겨진 필드 -->
+    <input type="hidden" name="original_id" value="<%= man[0].loginid %>" />
+    <% } %>
+    <div class="mb-3">
+      <label class="form-label" for="id">ID</label>
+      <input
+        class="form-control"
+        type="text"
+        name="loginid"
+        placeholder="아이디를 입력해 주세요"
+        style="width: 300px"
+        value="<%= man && man.length > 0 ? man[0].loginid : '' %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">PW</label>
+      <input
+        class="form-control"
+        type="text"
+        name="password"
+        placeholder="패스워드를 입력해 주세요"
+        style="width: 300px"
+        value="<%= man && man.length > 0 ? man[0].password : '' %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">이름</label>
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+        placeholder="이름을 입력해 주세요"
+        style="width: 300px"
+        value="<%= man && man.length > 0 ? man[0].name : '' %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">주소</label>
+      <input
+        class="form-control"
+        type="text"
+        name="address"
+        placeholder="주소를 입력해 주세요"
+        style="width: 300px"
+        value="<%= man && man.length > 0 ? man[0].address : '' %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">전화번호</label>
+      <input
+        class="form-control"
+        type="text"
+        name="tel"
+        placeholder="000-0000-0000"
+        style="width: 300px"
+        value="<%= man && man.length > 0 ? man[0].tel : '' %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id">생일</label>
+      <input
+        class="form-control"
+        type="text"
+        name="birth"
+        placeholder="YYYYMMDD"
+        style="width: 300px"
+        value="<%= man && man.length > 0 ? man[0].birth : '' %>"
+      />
+    </div>
+    <% if(cls === 'MNG') {%>
+    <!-- CLASS 옵션 -->
+    <div class="mb-3">
+      <label for="classSelect" class="form-label">CLASS</label>
+      <select
+        id="classSelect"
+        name="class"
+        class="form-select"
+        style="width: 300px"
+      >
+        <option value="CST" <%="man" && man.length>
+          0 && man[0].class === 'CST' ? 'selected' : '' %>>고객
+        </option>
+        <option value="CEO" <%="man" && man.length>
+          0 && man[0].class === 'CEO' ? 'selected' : '' %>>경영자
+        </option>
+        <option value="MNG" <%="man" && man.length>
+          0 && man[0].class === 'MNG' ? 'selected' : '' %>>관리자
+        </option>
+      </select>
+    </div>
+
+    <!-- GRADE 옵션 -->
+    <div class="mb-3">
+      <label for="gradeSelect" class="form-label">GRADE</label>
+      <select
+        id="gradeSelect"
+        name="grade"
+        class="form-select"
+        style="width: 300px"
+      >
+        <option value="S" <%="man" && man.length>
+          0 && man[0].grade === 'S' ? 'selected' : '' %>>실버(가장 낮은 등급)
+        </option>
+        <option value="G" <%="man" && man.length>
+          0 && man[0].grade === 'G' ? 'selected' : '' %>>골드(중간 등급)
+        </option>
+        <option value="D" <%="man" && man.length>
+          0 && man[0].grade === 'D' ? 'selected' : '' %>>다이아몬드(가장 높은
+          등급)
+        </option>
+      </select>
+    </div>
+    <%}%>
+
+    <!-- 버튼 -->
+    <button class="btn btn-outline-primary btn-sm" type="submit">입력</button>
+    <a href="/person/view" class="btn btn-outline-primary btn-sm">돌아가기</a>
+  </form>
+</div>

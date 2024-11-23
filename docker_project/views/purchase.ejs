@@ -1,0 +1,47 @@
+<table class="table table-bordered" style="text-align: center">
+  <thead class="table-primary">
+    <tr>
+      <th>상품</th>
+      <th>상품명</th>
+      <th>단가</th>
+      <th>구매량</th>
+      <th>총금액</th>
+      <th>구매일</th>
+      <th>취소여부</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (pur.length > 0) { %> <% for (let i = 0; i < pur.length; i++) { %>
+    <tr>
+      <td>
+        <a href="#" style="text-decoration: none">
+          <img
+            src="<%= pur[i].image %>"
+            alt="<%= pur.name %>"
+            style="width: 100px; height: 100px"
+          />
+        </a>
+      </td>
+      <td><%= pur[i].name %></td>
+      <td><%= pur[i].price.toLocaleString('ko-KR')%> 원</td>
+      <td><%= pur[i].qty %></td>
+      <td><%= pur[i].total.toLocaleString('ko-KR')%> 원</td>
+      <td><%= pur[i].date %></td>
+      <td>
+        <% if (pur[i].cancel === 'Y') { %> 취소된 상품 <% } else { %>
+        <a href="/purchase/cancel/<%=pur[i].purchase_id%>">
+          <button class="btn btn-outline-primary btn-sm" type="submit">
+            구매취소
+          </button>
+        </a>
+        <% } %>
+      </td>
+    </tr>
+    <% } %> <% } else { %>
+
+    <tr>
+      <td colspan="7">구매 기록이 없습니다.</td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>

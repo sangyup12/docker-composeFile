@@ -1,0 +1,178 @@
+<div class="container">
+  <script>
+    function displayFileName() {
+      var fileName = $("#file").val();
+      $(".upload-name").val(fileName);
+    }
+  </script>
+
+  <h2><%= mer && mer.length > 0 ? '상품 수정' : '상품 입력' %></h2>
+  <!-- 제목 변경 -->
+  <form
+    action="<%= mer && mer.length > 0 ? '/product/update_process' : '/product/create_process' %>"
+    method="post"
+    enctype="multipart/form-data"
+    accept-charset="UTF-8"
+  >
+    <% if (mer && mer.length > 0) { %>
+    <!-- 수정 모드일 때 숨겨진 필드 추가 -->
+    <input type="hidden" name="original_id" value="<%= mer[0].mer_id %>" />
+    <!-- 고유 ID -->
+    <% } %>
+
+    <div class="mb-3">
+      <label class="form-label" for="id_main">카테고리</label>
+      <select name="category" id="id_main">
+        <% for (let i = 0; i < categorys.length; i++) { %>
+          <option
+            value="<%= categorys[i].main_id + ',' + categorys[i].sub_id %>"
+            <%= mer && mer.length > 0 && (mer[0].main_id === categorys[i].main_id && mer[0].sub_id === categorys[i].sub_id) ? 'selected' : '' %>>
+            <%= categorys[i].main_name %> : <%= categorys[i].sub_name %>
+          </option>
+        <% } %>
+      </select>
+    </div>
+
+    <table>
+      <tr>
+        <td>
+          <div class="mb-3">
+            <label class="form-label" for="productName">제품명</label>
+            <input
+              class="form-control"
+              type="text"
+              name="name"
+              id="productName"
+              style="width: 300px"
+              value="<%= mer && mer.length > 0 ? mer[0].name : '' %>"
+            />
+          </div>
+        </td>
+        <td width="30px"></td>
+        <td>
+          <div class="mb-3">
+            <label class="form-label" for="productPrice">가격</label>
+            <input
+              class="form-control"
+              type="text"
+              name="price"
+              id="productPrice"
+              style="width: 300px"
+              value="<%= mer && mer.length > 0 ? mer[0].price : '' %>"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="mb-3">
+            <label class="form-label" for="productStock">재고</label>
+            <input
+              class="form-control"
+              type="text"
+              name="stock"
+              id="productStock"
+              style="width: 300px"
+              value="<%= mer && mer.length > 0 ? mer[0].stock : '' %>"
+            />
+          </div>
+        </td>
+        <td width="30px"></td>
+        <td>
+          <div class="mb-3">
+            <label class="form-label" for="productBrand">브랜드</label>
+            <input
+              class="form-control"
+              type="text"
+              name="brand"
+              id="productBrand"
+              style="width: 300px"
+              value="<%= mer && mer.length > 0 ? mer[0].brand : '' %>"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="mb-3">
+            <label class="form-label" for="productSupplier">공급자</label>
+            <input
+              class="form-control"
+              type="text"
+              name="supplier"
+              id="productSupplier"
+              style="width: 300px"
+              value="<%= mer && mer.length > 0 ? mer[0].supplier : '' %>"
+            />
+          </div>
+        </td>
+        <td width="30px"></td>
+        <td>
+          <div class="mb-3">
+            <label class="form-label" for="productSaleYn">할인여부</label>
+            <input
+              class="form-control"
+              type="text"
+              name="sale_yn"
+              id="productSaleYn"
+              style="width: 300px"
+              value="<%= mer && mer.length > 0 ? mer[0].sale_yn : '' %>"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="mb-3">
+            <label class="form-label" for="productSalePrice">할인가격</label>
+            <input
+              class="form-control"
+              type="text"
+              name="sale_price"
+              id="productSalePrice"
+              style="width: 300px"
+              value="<%= mer && mer.length > 0 ? mer[0].sale_price : '' %>"
+            />
+          </div>
+        </td>
+        <td width="30px"></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <div class="mb-3">
+      <input
+        class="upload-name"
+        name="image"
+        placeholder="이미지파일"
+        value="<%= mer && mer.length > 0 ? mer[0].image : '' %>"
+      />
+      <input
+        type="file"
+        id="file"
+        name="uploadFile"
+        onchange="displayFileName()"
+      />
+      <% if (mer && mer.length > 0 && mer[0].image) { %>
+      <input type="hidden" name="currentImage" value="<%= mer[0].image %>" />
+      <label>현재 이미지:</label>
+      <img
+        src="/images/<%= mer[0].image %>"
+        alt="이미지 미리보기"
+        style="width: 100px; height: 100px"
+      />
+      <% } %>
+    </div>
+
+    <button class="btn btn-outline-primary btn-sm" type="submit">
+      <%= mer && mer.length > 0 ? '수정' : '입력' %>
+      <!-- 버튼 텍스트 변경 -->
+    </button>
+    &nbsp;&nbsp;&nbsp;
+    <a href="/product/view">
+      <button class="btn btn-outline-primary btn-sm" type="button">
+        제품목록 돌아가기
+      </button>
+    </a>
+  </form>
+</div>

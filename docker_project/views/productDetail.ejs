@@ -1,0 +1,43 @@
+<table class="table table-bordered">
+  <% for (let i = 0; i < mer.length; i++) { %>
+
+  <tr>
+    <td rowspan="6">
+      <img src="<%= mer[i].image %>" style="width: 300px; height: 300px" />
+    </td>
+    <td><%= mer[i].name %></td>
+  </tr>
+  <tr>
+    <td>
+      가격 : <%= mer && mer.length > 0 ? mer[i].price.toLocaleString('ko-KR') :
+      '' %> 원
+    </td>
+  </tr>
+  <tr>
+    <td>브랜드 : <%= mer[i].brand %></td>
+  </tr>
+  <tr>
+    <td>공급업체 : <%= mer[i].supplier %></td>
+  </tr>
+  <% if (login && cls === 'CST') { %>
+  <tr>
+    <td>
+      <a href="/purchase/detail/<%=mer[i].mer_id%>"
+        ><button class="btn btn-outline-primary btn-sm" type="submit">
+          구매
+        </button></a
+      >
+      <form
+        action="/purchase/cart/add/<%=mer[i].mer_id%>"
+        method="post"
+        style="display: inline-block"
+      >
+        <input type="hidden" value="" name="mer_id" />
+        <button class="btn btn-outline-primary btn-sm" type="submit">
+          장바구니
+        </button>
+      </form>
+    </td>
+  </tr>
+  <% } %> <% } %>
+</table>

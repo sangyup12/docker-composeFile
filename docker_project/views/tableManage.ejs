@@ -1,0 +1,27 @@
+<table class="table table-bordered mt-3" style="text-align: center">
+  <thead class="table-primary">
+    <tr>
+      <th>테이블 명</th>
+      <th>테이블 설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (tables && tables.length > 0) { %> <% tables.forEach(table => { %>
+    <tr>
+      <td>
+        <a
+          href="/table/view/<%= table.TABLE_NAME %>"
+          style="text-decoration: none"
+        >
+          <%= table.TABLE_NAME %>
+        </a>
+      </td>
+      <td><%= table.TABLE_COMMENT || '설명 없음' %></td>
+    </tr>
+    <% }) %> <% } else { %>
+    <tr>
+      <td colspan="2">테이블 정보가 없습니다.</td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>

@@ -1,0 +1,124 @@
+<div class="container">
+    <form action="/purchase/view/update/<%= pur[0].purchase_id %>" method="post">
+  
+      <!-- 고객 선택 -->
+<div class="mb-3">
+  <label for="customer" class="form-label">고객</label>
+  <select id="customer" style="width: 500px;" name="loginid" class="form-select">
+    <% man.forEach(customer => { %>
+      <option value="<%= customer.loginid %>" <%= pur[0].loginid === customer.loginid ? 'selected' : '' %>>
+        <%= customer.name %>
+      </option>
+    <% }); %>
+  </select>
+</div>
+  
+      <!-- 상품 선택 -->
+<div class="mb-3">
+  <label for="product" class="form-label">상품</label>
+  <select id="product" style="width: 500px;" name="mer_id" class="form-select">
+    <% mer.forEach(product => { %>
+      <option value="<%= product.mer_id %>" <%= pur[0].mer_id === product.mer_id ? 'selected' : '' %>>
+        <%= product.name %>
+      </option>
+    <% }); %>
+  </select>
+</div>
+  
+      <!-- Flexbox: 날짜와 가격 가로 배치 -->
+    <div class="mb-3 d-flex">
+        <div class="flex-fill me-3">
+          <label for="date" class="form-label">날짜</label>
+          <input
+            type="text"
+            id="date"
+            class="form-control"
+            value="<%= pur[0].date %>"
+            disabled
+          />
+        </div>
+        <div class="flex-fill">
+          <label for="price" class="form-label">가격</label>
+          <input
+            type="text"
+            id="price"
+            name="price"
+            class="form-control"
+            value="<%= pur[0].price %>"
+          />
+        </div>
+      </div>
+  
+    <!-- Flexbox: 포인트와 수량 가로 배치 -->
+    <div class="mb-3 d-flex">
+        <div class="flex-fill me-3">
+          <label for="point" class="form-label">포인트</label>
+          <input
+            type="text"
+            id="point"
+            name="point"
+            class="form-control"
+            value="<%= pur[0].point %>"
+          />
+        </div>
+        <div class="flex-fill">
+          <label for="qty" class="form-label">수량</label>
+          <input
+            type="number"
+            id="qty"
+            name="qty"
+            class="form-control"
+            value="<%= pur[0].qty %>"
+            min="1"
+          />
+        </div>
+      </div>
+  
+      <!-- 총액 -->
+      <div class="mb-3">
+        <label for="total" class="form-label">총액</label>
+        <input
+          type="number"
+          id="total"
+          name="total"
+          class="form-control"
+          value="<%= pur[0].total %>"
+          style="width: 200px;"
+          readonly
+        />
+      </div>
+  
+      <!-- 지불 여부 -->
+      <div class="mb-3">
+        <label for="payYN" class="form-label">지불 여부</label>
+        <select id="payYN" style="width: 100px" name="payYN" class="form-select">
+          <option value="Y" <%= pur[0].payYN === 'Y' ? 'selected' : '' %>>YES</option>
+          <option value="N" <%= pur[0].payYN === 'N' ? 'selected' : '' %>>NO</option>
+        </select>
+      </div>
+  
+      <!-- 취소 여부 -->
+      <div class="mb-3">
+        <label for="cancel" class="form-label">취소 여부</label>
+        <select id="cancel" style="width: 100px" name="cancel" class="form-select">
+          <option value="Y" <%= pur[0].cancel === 'Y' ? 'selected' : '' %>>YES</option>
+          <option value="N" <%= pur[0].cancel === 'N' ? 'selected' : '' %>>NO</option>
+        </select>
+      </div>
+  
+      <!-- 환불 여부 -->
+      <div class="mb-3">
+        <label for="refund" class="form-label">환불 여부</label>
+        <select id="refund" style="width: 100px;" name="refund" class="form-select">
+          <option value="Y" <%= pur[0].refund === 'Y' ? 'selected' : '' %>>YES</option>
+          <option value="N" <%= pur[0].refund === 'N' ? 'selected' : '' %>>NO</option>
+        </select>
+      </div>
+  
+      <!-- 수정 및 목록으로 돌아가기 버튼 -->
+      <div class="d-flex justify-content-start">
+        <button type="submit" class="btn btn-primary me-2">수정</button>
+        <a href="/purchase/view" class="btn btn-secondary">구매 목록 돌아가기</a>
+      </div>
+    </form>
+  </div>

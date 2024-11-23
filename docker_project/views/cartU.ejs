@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>cart 테이블 수정</h2>
+  <form action="/purchase/cart/update/<%= car[0].cart_id %>" method="post">
+
+    <!-- 고객 선택 -->
+    <div class="mb-3">
+      <label for="customer" class="form-label">고객</label>
+      <select id="customer" name="loginid" class="form-select">
+        <% man.forEach(customer => { %>
+          <% car.forEach(cart => { %>
+          <option value="<%= customer.loginid %>" <%= customer.loginid === cart.loginid ? 'selected' : '' %>>
+            <%= customer.name %>
+          </option>
+        <% }); %>
+        <% }); %>
+
+      </select>
+    </div>
+
+    <!-- 상품 선택 -->
+<div class="mb-3">
+  <label for="product" class="form-label">상품</label>
+  <select id="product" name="mer_id" class="form-select">
+    <% mer.forEach(product => { %>
+      <option value="<%= product.mer_id %>" 
+        <%= car.some(cart => cart.mer_id === product.mer_id) ? 'selected' : '' %>>
+        <%= product.name %>
+      </option>
+    <% }); %>
+  </select>
+</div>
+
+    <!-- 날짜 표시 -->
+    <div class="mb-3">
+      <label for="date" class="form-label">날짜</label>
+      <input
+        type="text"
+        id="date"
+        class="form-control"
+        value="<%= car[0].date %>"
+        disabled
+      />
+    </div>
+
+    <!-- 수정 및 목록으로 돌아가기 버튼 -->
+    <div class="d-flex justify-content-start">
+      <button type="submit" class="btn btn-primary me-2">수정</button>
+      <a href="/purchase/cart/view" class="btn btn-secondary">카트 목록 돌아가기</a>
+    </div>
+  </form>
+</div>

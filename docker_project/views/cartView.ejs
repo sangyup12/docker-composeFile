@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>Cart View</h2>
+  <table class="table table-bordered" style="text-align: center">
+    <thead class="table-primary">
+      <tr>
+        <th>loginid</th>
+        <th>고객명</th>
+        <th>상품id</th>
+        <th>상품명</th>
+        <th>일자</th>
+        <th>수정</th>
+        <th>삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (car.length > 0) { %> <% for (let i = 0; i < car.length; i++) { %>
+      <tr>
+        <td><%= car[i].loginid %></td>
+        <td><%= car[i].person_name %></td>
+        <td><%= car[i].mer_id %></td>
+        <td><%= car[i].product_name %></td>
+        <td><%= car[i].date %></td>
+        <td>
+          <!-- 수정 버튼 -->
+          <form action="/purchase/cart/edit/<%= car[i].cart_id %>" method="get">
+            <button type="submit" class="btn btn-primary btn-sm">수정</button>
+          </form>
+        </td>
+        <td>
+          <!-- 삭제 버튼 -->
+          <form action="/purchase/cart/delete" method="post">
+            <input type="hidden" name="cartIds" value="<%= car[i].cart_id %>" />
+            <button
+              type="submit"
+              class="btn btn-danger btn-sm"
+              onclick="return confirm('이 항목을 삭제하시겠습니까?');"
+            >
+              삭제
+            </button>
+          </form>
+        </td>
+      </tr>
+      <% } %> <% } else { %>
+      <tr>
+        <td colspan="7">장바구니에 담긴 상품이 없습니다.</td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

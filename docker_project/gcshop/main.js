@@ -18,11 +18,28 @@ var session = require("express-session");
 var MySqlStore = require("express-mysql-session")(session);
 var bodyParser = require("body-parser");
 var options = {
-  host: "mysql",
-  user: "root",
-  password: "root",
-  database: "webdb2024",
+  host: process.env.DB_HOST || "127.0.0.1", // 환경 변수 우선 사용
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "root",
+  database: process.env.DB_NAME || "webdb2024",
 };
+const mysql = require("mysql2/promise");
+
+async function testDBConnection() {
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST || "mysql",
+      user: process.env.DB_USER || "root",
+      password: process.env.DB_PASSWORD || "root",
+      database: process.env.DB_NAME || "webdb2024",
+    });
+    console.log("Successfully connected to MySQL!");
+    await connection.end();
+  } catch (error) {
+    console.error("MySQL connection failed:", error.message);
+  }
+}
+testDBConnection();
 var sessionStore = new MySqlStore(options, (err) => {
   if (err) {
     console.error("Failed to connect to MySQL session store:", err);

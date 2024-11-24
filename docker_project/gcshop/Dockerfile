@@ -1,3 +1,4 @@
+
 # Dockerfile for Node.js application
 FROM node:16
 
@@ -9,13 +10,8 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
-
-# Install MySQL client
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-client \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
+# Install MySQL client for debugging
+RUN apt-get update && apt-get install -y mysql-client
 # Copy the rest of the application code
 COPY . .
 

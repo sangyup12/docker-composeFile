@@ -10,9 +10,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Install MySQL client for debugging
+# Install MySQL client
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends mysql-client \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

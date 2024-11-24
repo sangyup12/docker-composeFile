@@ -10,8 +10,7 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
-# Install MySQL client for debugging
-RUN apt-get update && apt-get install -y mysql-client
+
 # Copy the rest of the application code
 COPY . .
 

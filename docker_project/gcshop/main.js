@@ -18,7 +18,7 @@ var session = require("express-session");
 var MySqlStore = require("express-mysql-session")(session);
 var bodyParser = require("body-parser");
 var options = {
-  host: "localhost",
+  host: "mysql",
   user: "root",
   password: "root",
   database: "webdb2024",
@@ -32,7 +32,7 @@ app.use(
     store: sessionStore,
   })
 );
-
+console.log("Session Store Options:", options);
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static("public"));

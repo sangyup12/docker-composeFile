@@ -7,6 +7,20 @@ var db = mysql.createConnection({
   database: process.env.DB_NAME,
   multipleStatements: true,
 });
-
+async function testDBConnection() {
+  try {
+    const connection = await mysql.createConnection({
+      host: options.host,
+      user: options.user,
+      password: options.password,
+      database: options.database,
+    });
+    console.log("MySQL connection successful.");
+    await connection.end();
+  } catch (err) {
+    console.error("MySQL connection failed:", err);
+  }
+}
+testDBConnection();
 db.connect();
 module.exports = db;

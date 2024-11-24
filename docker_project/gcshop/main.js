@@ -23,7 +23,13 @@ var options = {
   password: "root",
   database: "webdb2024",
 };
-var sessionStore = new MySqlStore(options);
+var sessionStore = new MySqlStore(options, (err) => {
+  if (err) {
+    console.error("Failed to connect to MySQL session store:", err);
+  } else {
+    console.log("Connected to MySQL session store.");
+  }
+});
 app.use(
   session({
     secret: "keyboard cat",

@@ -32,7 +32,8 @@ services:
       DB_PASSWORD: root
       DB_NAME: webdb2024
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - custom_bridge
 
